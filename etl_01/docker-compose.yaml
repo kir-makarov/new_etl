@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+
+############# Generals #############
+  postgres:
+    image: postgres:13.0-alpine
+    container_name: postgres
+    volumes:
+      - /home/kirmakarov/postgresql/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - backend
+    env_file:
+      - ./etl/.env
+
+  elasticsearch:
+    image: elasticsearch:7.17.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xmx512m -Xms512m
+    ports:
+      - 9200:9200
+    networks:
+      - backend
+    env_file:
+      - ./etl/.env
+
+############## ETL ##################
+
+  etl:
+    build:
+      context: ./etl
+      dockerfile: Dockerfile
+    container_name: etl
+    networks:
+      - backend
+    env_file:
+      - ./etl/.env
+    depends_on:
+      - postgres
+      - elasticsearch
+
+volumes:
+  postgres_volume:
+
+networks:
+  backend:
+    driver: bridge
