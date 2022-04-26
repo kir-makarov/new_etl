@@ -23,7 +23,7 @@ log = logging.getLogger('MainLog')
 if __name__ == '__main__':
     filmwork_columns = ['id', 'title', 'description', 'imdb_rating',
                         'genre', 'director', 'actors_names', 'writers_names',
-                        'actors', 'writers']
+                        'actors', 'writers', 'directors']
     genre_columns = ["id", "name"]
     person_columns = ["id", "full_name", "roles", "film_ids"]
     batch = 100
