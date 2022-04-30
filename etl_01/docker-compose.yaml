@@ -8,8 +8,6 @@ services:
     container_name: postgres
     volumes:
       - /home/kirmakarov/postgresql/data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
     networks:
       - backend
     env_file:
@@ -21,8 +19,6 @@ services:
     environment:
       - discovery.type=single-node
       - ES_JAVA_OPTS=-Xmx512m -Xms512m
-    ports:
-      - 9200:9200
     networks:
       - backend
     env_file:
